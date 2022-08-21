@@ -1,0 +1,1 @@
+// https://v3.nuxtjs.org/guide/features/state-management#shared-state 
