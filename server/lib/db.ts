@@ -26,21 +26,33 @@ type Data = {
   users: User[]
 }
 
-export class Db {
+// here we use the singleton design pattern:
+// the getInstance method creates an instance of the DbConnection class if it doesn't alredy exist and stores it
+// then this same DbConnection instance is accessible throughout the app using the getInstance method
+export class DbConnection {
 
-  private static instance: Low<Data>
+  private static instance: DbConnection
 
-  constructor() {
-    if (!Db.instance) {
-      const __dirname = dirname(fileURLToPath(import.meta.url));
+  private connection: Low<Data>
 
-      // Use JSON file for storage
-      const file = join(__dirname, 'db.json')
-      const adapter = new JSONFile<Data>(file)
-      Db.instance = new Low(adapter)
-    }
+  private constructor() {
+    const __dirname = dirname(fileURLToPath(import.meta.url));
+    // Use JSON file for storage
+    const file = join(__dirname, 'db.json')
+    const adapter = new JSONFile<Data>(file)
+    this.connection = new Low(adapter)
+    DbConnection.instance = this
   }
 
-  public getInstance = () => Db.instance
+  public static getInstance = () => {
+    if (!DbConnection.instance) {
+      new DbConnection()
+    }
+    return DbConnection.instance
+  }
+
+  public connect = async () => await this.connection.read()
+
+  public getConnection = () => this.connection
 
 }
