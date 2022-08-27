@@ -11,6 +11,9 @@ export default defineNuxtConfig({
       "~/server/lib/connectDb.ts",
     ]
   },
+  runtimeConfig: {
+    jwtSecret: '', // can be overridden by NUXT_JWT_SECRET environment variable
+  },
   build: {
     postcss: {
       postcssOptions: {
