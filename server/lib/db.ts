@@ -18,7 +18,10 @@ type Products = {
 
 type User = {
   "name": string,
-  "mail": string
+  "mail": string,
+  "hash": string,
+  "lists": string[][],
+  "uuid": string
 }
 
 type Data = {

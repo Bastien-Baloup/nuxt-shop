@@ -7,6 +7,9 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/uuid": "^8.3.4",
     "autoprefixer": "^10.4.8",
     "nuxt": "3.0.0-rc.8",
     "postcss": "^8.4.16",
@@ -15,6 +18,9 @@
     "vue-tsc": "^0.40.1"
   },
   "dependencies": {
-    "lowdb": "^3.0.0"
+    "bcrypt": "^5.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "lowdb": "^3.0.0",
+    "uuid": "^8.3.2",
   }
 }
