@@ -1,4 +1,4 @@
-import { DbConnection } from '../../../lib/db'
+import { DbConnection } from '~~/server/lib/db'
 const db = DbConnection.getInstance().getConnection()
 
 /**
@@ -13,5 +13,5 @@ export default defineEventHandler((event) => {
   Then we create a new array containing only the uniques values from the category field using a intermediary set that we spread in the new array
     categories = [... new Set(array)]
   */
-  return { categories: [...new Set(db.data?.products.map((product) => product.category))] || null }
+  return { success: true, categories: [...new Set(db.data?.products.map((product) => product.category))] || null }
 })

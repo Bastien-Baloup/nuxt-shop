@@ -1,11 +1,11 @@
-import { checkUserAuth } from '../../lib/auth'
-import { DbConnection } from '../../lib/db'
+import { checkUserAuth } from '~~/server/lib/auth'
+import { DbConnection } from '~~/server/lib/db'
 const db = DbConnection.getInstance().getConnection()
 
 /**
  * route : /api/users/[mail]
- * method : GET
- * Return the user with the mail = to the route parameter
+ * method : DELETE
+ * Delete the user with the mail = to the route parameter
  */
 export default defineEventHandler((event) => {
   // check if the connected user is the one with the email passed in parametter

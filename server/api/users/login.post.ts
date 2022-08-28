@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import { validateEmail } from '../../lib/formValidation'
-import { DbConnection } from '../../lib/db'
+import { createToken } from '~~/server/lib/auth'
+import { DbConnection } from '~~/server/lib/db'
 const db = DbConnection.getInstance().getConnection()
 
 interface Body {
@@ -24,15 +23,9 @@ export default defineEventHandler(async (event) => {
   if (!body.password) { return { error: true, message: "Tous les champs doivent être remplis." } }
   // check if the password match the password hash
   const match = await bcrypt.compare(body.password, user.hash);
-  if(!match) {return { error: true, message: "Adresse e-mail ou mot de passe invalide." }}
-  // create a authentification token
-  const jwtPayload = { uuid: user.uuid, mail: user.mail }
-  const secret = useRuntimeConfig().jwtSecret
-  const jwtOptions:jwt.SignOptions = {
-    algorithm: 'HS512',
-    expiresIn: '61d'
-  }
-  const token = jwt.sign(jwtPayload, secret, jwtOptions)
+  if (!match) { return { error: true, message: "Adresse e-mail ou mot de passe invalide." } }
+  // create an authentification token
+  const token = createToken(user)
 
-  return { mail: user.mail, token: token }
+  return { success: true, mail: user.mail, token: token }
 })

@@ -1,5 +1,5 @@
 import { Nitro } from 'nitropack';
-import { DbConnection } from './db'
+import { DbConnection } from '~~/server/lib/db'
 
 import defaultProducts from 'public/products.json' assert {type: 'json'};
 

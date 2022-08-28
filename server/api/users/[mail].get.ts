@@ -1,5 +1,5 @@
-import { checkUserAuth } from '../../lib/auth'
-import { DbConnection } from '../../lib/db'
+import { checkUserAuth } from '~~/server/lib/auth'
+import { DbConnection } from '~~/server/lib/db'
 const db = DbConnection.getInstance().getConnection()
 
 /**
@@ -14,5 +14,5 @@ export default defineEventHandler((event) => {
   const _user = { ...db.data?.users.find((user) => user.mail === event.context.params.mail) }
   // remove the password hash from the copy before sending it in the response
   if (_user) { _user.hash = "hidden" }
-  return { user: _user || null }
+  return { success: true, user: _user || null }
 })

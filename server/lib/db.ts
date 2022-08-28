@@ -2,7 +2,7 @@ import { join, dirname } from 'path'
 import { Low, JSONFile } from 'lowdb'
 import { fileURLToPath } from 'url'
 
-type Products = {
+export type Products = {
   "name": string | null,
   "slug": string,
   "category": string,
@@ -16,7 +16,7 @@ type Products = {
   "available": boolean
 }
 
-type User = {
+export type User = {
   "name": string,
   "mail": string,
   "hash": string,

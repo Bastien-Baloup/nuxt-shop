@@ -1,8 +1,9 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { v4 as uuidV4 } from 'uuid'
-import { validateEmail } from '../../lib/formValidation'
-import { DbConnection } from '../../lib/db'
+import { validateEmail } from '~~/server/lib/formValidation'
+import { createToken } from '~~/server/lib/auth'
+import { DbConnection } from '~~/server/lib/db'
 const db = DbConnection.getInstance().getConnection()
 
 interface Body {
@@ -49,14 +50,8 @@ export default defineEventHandler(async (event) => {
     db.data?.users.push(user)
     await db.write()
     // create an authentification token
-    const jwtPayload = { uuid: user.uuid, mail: user.mail }
-    const secret = useRuntimeConfig().jwtSecret
-    const jwtOptions:jwt.SignOptions = {
-      algorithm: 'HS512',
-      expiresIn: '61d'
-    }
-    const token = jwt.sign(jwtPayload, secret, jwtOptions)
+    const token = createToken(user)
 
-    return { mail: user.mail, token: token }
+    return { success: true, mail: user.mail, token: token }
   }
 })

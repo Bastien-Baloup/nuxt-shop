@@ -1,4 +1,4 @@
-import { DbConnection } from '../../../lib/db'
+import { DbConnection } from '~~/server/lib/db'
 const db = DbConnection.getInstance().getConnection()
 
 /**
@@ -7,5 +7,5 @@ const db = DbConnection.getInstance().getConnection()
  * Return all the products with the category = to the route parameter
  */
 export default defineEventHandler((event) => {
-  return { products: db.data?.products.filter((product) => product.category === event.context.params.category ) || null }
+  return { success: true, products: db.data?.products.filter((product) => product.category === event.context.params.category ) || null }
 })

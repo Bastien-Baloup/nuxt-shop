@@ -1,7 +1,7 @@
 import { returnStatement } from "@babel/types"
 import { CompatibilityEvent } from "h3"
 import jwt from 'jsonwebtoken'
-import { DbConnection } from './db'
+import { DbConnection, User } from '~~/server/lib/db'
 const db = DbConnection.getInstance().getConnection()
 
 export const checkUserAuth = (event: CompatibilityEvent): boolean => {
@@ -27,4 +27,15 @@ export const checkUserAuth = (event: CompatibilityEvent): boolean => {
   if(payload.uuid !== user.uuid) { return false }
 
   return true
+}
+
+export const createToken = (user: User):string => {
+  // create a authentification token
+  const jwtPayload = { uuid: user.uuid, mail: user.mail }
+  const secret = useRuntimeConfig().jwtSecret
+  const jwtOptions:jwt.SignOptions = {
+    algorithm: 'HS512',
+    expiresIn: '61d'
+  }
+  return jwt.sign(jwtPayload, secret, jwtOptions)
 }
